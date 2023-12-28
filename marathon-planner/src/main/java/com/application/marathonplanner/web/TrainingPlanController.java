@@ -4,27 +4,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
 @RestController
 public class TrainingPlanController {
-    private List<Double> trainingSchedule;
+    private List<DayPlan> trainingSchedule;
     private double weeklyIncrease;
     private boolean isMetric;
     private double skillMultiplier;
+    private static final int WEEK_DAYS = 7;
+    private static final double MARATHON_DISTANCE = 42.2;
 
-    @RequestMapping(value = "/trainingSchedule", method = RequestMethod.POST)
-    public List<Double> trainingSchedule() {
-        setWeeklyIncrease(0.10);
-        setIsMetric(true);
-        setSkillMultiplier(1.0);
+    @RequestMapping(value = "/trainingSchedule", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    public List<DayPlan> trainingSchedule(@RequestBody Runner runnerData) {
+        setWeeklyIncrease(runnerData.getWeeklyIncrease());
+        setIsMetric(runnerData.isMetric());
+        setSkillMultiplier(runnerData.getSkillLevel());
         setTrainingSchedule();
-
-        // System.out.println(runnerData.getSkillLevel());
 
         return getTrainingSchedule();
     }
@@ -38,27 +37,22 @@ public class TrainingPlanController {
         double curMedium = initialMedium;
         double curLong = initialLong;
         int day, dayThisWeek;
+        DayPlan daySchedule;
 
         day = 0;
         dayThisWeek = 0;
-        trainingSchedule = new ArrayList<Double>();
+        trainingSchedule = new ArrayList<DayPlan>();
 
-        while (curLong < 42.2) {
-            if (dayThisWeek <= 2) {
-                trainingSchedule.add(curShort);
-            } else if (dayThisWeek == 3) {
-                trainingSchedule.add(curMedium);
-            } else if (dayThisWeek == 4) {
-                trainingSchedule.add(curLong);
-            } else {
-                trainingSchedule.add(0.0);
-            }
+        // continue training as long as the long run is shorter then a marathon distance
+        while (curLong < MARATHON_DISTANCE) {
+            daySchedule = getDayPlan(day, dayThisWeek, curShort, curMedium, curLong);
+            trainingSchedule.add(daySchedule);
 
             ++day;
             ++dayThisWeek;
 
             // increase mileage at the end of each week
-            if (dayThisWeek == 7) {
+            if (dayThisWeek == WEEK_DAYS) {
                 dayThisWeek = 0;
                 curShort += getWeeklyIncrease() * curShort;
                 curMedium += getWeeklyIncrease() * curMedium;
@@ -67,22 +61,41 @@ public class TrainingPlanController {
         }
     }
 
-    private List<Double> getTrainingSchedule() {
+    public List<DayPlan> getTrainingSchedule() {
         return trainingSchedule;
     }
 
-    private String getDateToday() {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        LocalDateTime currentTime = LocalDateTime.now();
+    public DayPlan getDayPlan(int day, int dayThisWeek, double curShort, double curMedium, double curLong) {
+        DayPlan daySchedule;
 
-        return dateFormatter.format(currentTime);
+        daySchedule = new DayPlan(getDate(day));
+
+        if (dayThisWeek <= 2) {
+            daySchedule.setDistance(curShort);
+        } else if (dayThisWeek == 4) {
+            daySchedule.setDistance(curMedium);
+        } else if (dayThisWeek == 6) {
+            daySchedule.setDistance(curLong);
+        }
+
+        return daySchedule;
+    }
+
+    public String getDate(int daysAfterToday) {
+        Calendar calendarDate = Calendar.getInstance();
+        calendarDate.add(Calendar.DATE, daysAfterToday);
+
+        // formatting the date
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        return dateFormatter.format(calendarDate.getTime());
     }
 
     private void setWeeklyIncrease(double weeklyIncrease) {
         this.weeklyIncrease = weeklyIncrease;
     }
 
-    private double getWeeklyIncrease() {
+    public double getWeeklyIncrease() {
         return this.weeklyIncrease;
     }
 
@@ -90,7 +103,7 @@ public class TrainingPlanController {
         this.isMetric = isMetric;
     }
 
-    private boolean getIsMetric() {
+    public boolean getIsMetric() {
         return this.isMetric;
     }
 
@@ -98,7 +111,7 @@ public class TrainingPlanController {
         this.skillMultiplier = 1.5 * skillLevel;
     }
 
-    private double getSkillMultiplier() {
+    public double getSkillMultiplier() {
         return this.skillMultiplier;
     }
 }

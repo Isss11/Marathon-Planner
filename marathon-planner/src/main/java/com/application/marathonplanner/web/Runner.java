@@ -1,14 +1,16 @@
 package com.application.marathonplanner.web;
 
 public class Runner {
+    private double weeklyIncrease;
+    private boolean isMetric;
     private int skillLevel;
 
-    public Runner(int skillLevel) {
-        setSkillLevel(skillLevel);
+    public double getWeeklyIncrease() {
+        return this.weeklyIncrease;
     }
 
-    private void setSkillLevel(int skillLevel) {
-        this.skillLevel = skillLevel;
+    public boolean isMetric() {
+        return this.isMetric;
     }
 
     public int getSkillLevel() {

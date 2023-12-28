@@ -7,7 +7,7 @@ A project (in progress) that will take user information and produce a marathon t
 
 >> `cd marathon-planner`
 
->> `mvn spring-boot-run`
+>> `mvn spring-boot:run`
 
 2. Start up front-end:
 
