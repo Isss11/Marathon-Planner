@@ -8,29 +8,35 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
-import java.util.Map;
 
 public class PdfUtils {
-    public static ByteArrayOutputStream generatePdfStream(List<Map<String, Object>> queryResults)
+    public static ByteArrayOutputStream generatePdfStream(List<DayPlan> trainingSchedule)
             throws DocumentException {
         Document document = new Document();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PdfWriter.getInstance(document, outputStream);
-        document.open(); // Write column names
-        Map<String, Object> firstRow = queryResults.get(0);
-        for (String column : firstRow.keySet()) {
-            Font boldFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
-            Paragraph paragraph = new Paragraph(column, boldFont);
-            document.add(paragraph);
-        }
-        document.add(new Paragraph("\n")); // Write data rows
-        for (Map<String, Object> row : queryResults) {
-            for (Object value : row.values()) {
-                Paragraph paragraph = new Paragraph(value.toString());
-                document.add(paragraph);
+        document.open();
+
+        // add header
+        Font boldFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
+        Paragraph paragraph = new Paragraph("Marathon Training Plan", boldFont);
+        document.add(paragraph);
+
+        // appending each day's training plan to the schedule
+        for (DayPlan dailyPlan : trainingSchedule) {
+            Paragraph dayHeader;
+
+            if (Double.compare(dailyPlan.getDistance(), 0.0) != 0) {
+                dayHeader = new Paragraph(
+                        String.format("%s: Run: %1.1f kilometers.\n", dailyPlan.getDate(), dailyPlan.getDistance()));
+
+            } else {
+                dayHeader = new Paragraph(String.format("%s: Rest day.\n", dailyPlan.getDate()));
             }
-            document.add(new Paragraph("\n"));
+
+            document.add(dayHeader);
         }
+
         document.close();
         return outputStream;
     }

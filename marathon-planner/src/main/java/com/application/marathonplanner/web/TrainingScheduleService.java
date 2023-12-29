@@ -39,18 +39,7 @@ public class TrainingScheduleService {
     }
 
     public ResponseEntity<byte[]> getTrainingPlanPdf() throws IOException, DocumentException {
-
-        Map<String, Object> mockMap;
-        ArrayList<Map<String, Object>> queryResults;
-
-        mockMap = new HashMap<String, Object>();
-
-        mockMap.put("testKey", "testValue");
-
-        queryResults = new ArrayList<Map<String, Object>>();
-        queryResults.add(mockMap);
-
-        ByteArrayOutputStream pdfStream = PdfUtils.generatePdfStream(queryResults);
+        ByteArrayOutputStream pdfStream = PdfUtils.generatePdfStream(getTrainingSchedule());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
         headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=query_results.pdf");
