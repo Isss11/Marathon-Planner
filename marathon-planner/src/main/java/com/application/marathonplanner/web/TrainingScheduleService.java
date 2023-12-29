@@ -1,10 +1,22 @@
 package com.application.marathonplanner.web;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import com.itextpdf.text.DocumentException;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
+import java.util.Map;
+import java.util.HashMap;
+
+import java.io.IOException;
+import java.io.ByteArrayOutputStream;
 
 @Service
 public class TrainingScheduleService {
@@ -24,6 +36,26 @@ public class TrainingScheduleService {
         setTrainingSchedule();
 
         return getTrainingSchedule();
+    }
+
+    public ResponseEntity<byte[]> getTrainingPlanPdf() throws IOException, DocumentException {
+
+        Map<String, Object> mockMap;
+        ArrayList<Map<String, Object>> queryResults;
+
+        mockMap = new HashMap<String, Object>();
+
+        mockMap.put("testKey", "testValue");
+
+        queryResults = new ArrayList<Map<String, Object>>();
+        queryResults.add(mockMap);
+
+        ByteArrayOutputStream pdfStream = PdfUtils.generatePdfStream(queryResults);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=query_results.pdf");
+        headers.setContentLength(pdfStream.size());
+        return new ResponseEntity<>(pdfStream.toByteArray(), headers, HttpStatus.OK);
     }
 
     public void setTrainingSchedule() {

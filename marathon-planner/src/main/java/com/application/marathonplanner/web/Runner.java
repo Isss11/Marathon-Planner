@@ -9,7 +9,7 @@ public class Runner {
         return this.weeklyIncrease;
     }
 
-    public boolean isMetric() {
+    public boolean getIsMetric() {
         return this.isMetric;
     }
 
