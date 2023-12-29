@@ -17,21 +17,29 @@ public class TrainingPlanController {
     private double skillMultiplier;
     private static final int WEEK_DAYS = 7;
     private static final double MARATHON_DISTANCE = 42.2;
+    private static final double MILE_TO_KM = 1.6093;
 
     @RequestMapping(value = "/trainingSchedule", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     public List<DayPlan> trainingSchedule(@RequestBody Runner runnerData) {
         setWeeklyIncrease(runnerData.getWeeklyIncrease());
-        setIsMetric(runnerData.isMetric());
+
+        setIsMetric(runnerData.getIsMetric());
         setSkillMultiplier(runnerData.getSkillLevel());
         setTrainingSchedule();
 
         return getTrainingSchedule();
     }
 
-    private void setTrainingSchedule() {
+    public void setTrainingSchedule() {
         double initialShort = 0.5 * getSkillMultiplier();
         double initialMedium = 1 * getSkillMultiplier();
         double initialLong = 2 * getSkillMultiplier();
+
+        if (!getIsMetric()) {
+            initialShort /= MILE_TO_KM;
+            initialMedium /= MILE_TO_KM;
+            initialLong /= MILE_TO_KM;
+        }
 
         double curShort = initialShort;
         double curMedium = initialMedium;
@@ -44,7 +52,8 @@ public class TrainingPlanController {
         trainingSchedule = new ArrayList<DayPlan>();
 
         // continue training as long as the long run is shorter then a marathon distance
-        while (curLong < MARATHON_DISTANCE) {
+        while (getIsMetric() && curLong < MARATHON_DISTANCE
+                || !getIsMetric() && curLong < MARATHON_DISTANCE / MILE_TO_KM) {
             daySchedule = getDayPlan(day, dayThisWeek, curShort, curMedium, curLong);
             trainingSchedule.add(daySchedule);
 
