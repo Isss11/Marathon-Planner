@@ -9,6 +9,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
+/* Copied and refactored code from this source: https://medium.com/@rijuldahiya/creating-a-pdf-export-api-with-itext-pdf-in-java-spring-boot-a0bdf5f8f57 */
+
 public class PdfUtils {
     public static ByteArrayOutputStream generatePdfStream(List<DayPlan> trainingSchedule)
             throws DocumentException {
