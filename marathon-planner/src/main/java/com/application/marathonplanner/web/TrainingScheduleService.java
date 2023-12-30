@@ -111,21 +111,29 @@ public class TrainingScheduleService {
 
     public DayPlan getDayPlan(int day, int dayThisWeek, double curShort, double curMedium, double curLong) {
         DayPlan daySchedule;
+        double distance;
+        String runTitle;
 
-        daySchedule = getDaySchedule(day);
+        distance = 0;
+        runTitle = "Rest";
 
         if (dayThisWeek <= 2) {
-            daySchedule.setDistance(curShort);
+            distance = curShort;
+            runTitle = "Easy Run";
         } else if (dayThisWeek == 4) {
-            daySchedule.setDistance(curMedium);
+            distance = curMedium;
+            runTitle = "Medium Run";
         } else if (dayThisWeek == 6) {
-            daySchedule.setDistance(curLong);
+            distance = curLong;
+            runTitle = "Long Run";
         }
+
+        daySchedule = getDaySchedule(day, distance, runTitle);
 
         return daySchedule;
     }
 
-    private DayPlan getDaySchedule(int day) {
+    private DayPlan getDaySchedule(int day, double distance, String runTitle) {
         DayPlan daySchedule;
         Calendar calendarDate;
         SimpleDateFormat dateFormatter;
@@ -137,7 +145,7 @@ public class TrainingScheduleService {
 
         daySchedule = new DayPlan(getDateString(calendarDate), dateFormatter.format(calendarDate.getTime()),
                 MONTH_STRINGS[calendarDate.get(Calendar.MONTH)],
-                calendarDate.get(Calendar.DAY_OF_MONTH), calendarDate.get(Calendar.YEAR));
+                calendarDate.get(Calendar.DAY_OF_MONTH), calendarDate.get(Calendar.YEAR), distance, runTitle);
 
         return daySchedule;
     }

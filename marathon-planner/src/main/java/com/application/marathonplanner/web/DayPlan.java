@@ -6,16 +6,18 @@ public class DayPlan {
     private String month;
     private int day;
     private int year;
-
     private double distance;
+    private String runTitle;
 
-    public DayPlan(String date, String weekDay, String month, int day, int year) {
+    public DayPlan(String date, String weekDay, String month, int day, int year, double distance, String runTitle) {
         setDate(date);
         setDistance(0);
         setWeekDay(weekDay);
         setMonth(month);
         setDay(day);
         setYear(year);
+        setDistance(distance);
+        setRunTitle(runTitle);
     }
 
     public void setDate(String date) {
@@ -64,5 +66,13 @@ public class DayPlan {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public String getRunTitle() {
+        return this.runTitle;
+    }
+
+    public void setRunTitle(String runTitle) {
+        this.runTitle = runTitle;
     }
 }
