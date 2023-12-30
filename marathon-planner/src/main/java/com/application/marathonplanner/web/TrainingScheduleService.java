@@ -11,9 +11,11 @@ import com.itextpdf.text.DocumentException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.io.IOException;
+import java.util.Date;
 import java.io.ByteArrayOutputStream;
 
 @Service
@@ -25,6 +27,10 @@ public class TrainingScheduleService {
     private static final int WEEK_DAYS = 7;
     private static final double MARATHON_DISTANCE = 42.2;
     private static final double MILE_TO_KM = 1.6093;
+
+    private static final String[] MONTH_STRINGS = { "January", "February", "March", "April", "May", "June", "July",
+            "August",
+            "September", "October", "November", "December" };
 
     public List<DayPlan> createTrainingSchedule(double weeklyIncrease, boolean isMetric, int skillLevel) {
         setWeeklyIncrease(weeklyIncrease);
@@ -91,8 +97,17 @@ public class TrainingScheduleService {
 
     public DayPlan getDayPlan(int day, int dayThisWeek, double curShort, double curMedium, double curLong) {
         DayPlan daySchedule;
+        Calendar calendarDate;
+        SimpleDateFormat dateFormatter;
 
-        daySchedule = new DayPlan(getDate(day));
+        calendarDate = Calendar.getInstance();
+        calendarDate.setTime(getDate(day));
+
+        dateFormatter = new SimpleDateFormat("EEEE");
+
+        daySchedule = new DayPlan(getDateString(calendarDate), dateFormatter.format(calendarDate.getTime()),
+                MONTH_STRINGS[calendarDate.get(Calendar.MONTH)],
+                calendarDate.get(Calendar.DAY_OF_MONTH), calendarDate.get(Calendar.YEAR));
 
         if (dayThisWeek <= 2) {
             daySchedule.setDistance(curShort);
@@ -105,14 +120,17 @@ public class TrainingScheduleService {
         return daySchedule;
     }
 
-    public String getDate(int daysAfterToday) {
+    private Date getDate(int daysAfterToday) {
         Calendar calendarDate = Calendar.getInstance();
         calendarDate.add(Calendar.DATE, daysAfterToday);
 
-        // formatting the date
+        return calendarDate.getTime();
+    }
+
+    private String getDateString(Calendar date) {
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        return dateFormatter.format(calendarDate.getTime());
+        return dateFormatter.format(date.getTime());
     }
 
     private void setWeeklyIncrease(double weeklyIncrease) {

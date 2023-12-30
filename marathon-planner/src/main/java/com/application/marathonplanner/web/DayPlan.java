@@ -1,17 +1,21 @@
 package com.application.marathonplanner.web;
 
 public class DayPlan {
-    private String date;
+    private String date; // full date string
+    private String weekDay;
+    private String month;
+    private int day;
+    private int year;
+
     private double distance;
 
-    public DayPlan(String date) {
+    public DayPlan(String date, String weekDay, String month, int day, int year) {
         setDate(date);
         setDistance(0);
-    }
-
-    public DayPlan(String date, double distance) {
-        setDate(date);
-        setDistance(distance);
+        setWeekDay(weekDay);
+        setMonth(month);
+        setDay(day);
+        setYear(year);
     }
 
     public void setDate(String date) {
@@ -28,5 +32,37 @@ public class DayPlan {
 
     public double getDistance() {
         return this.distance;
+    }
+
+    public String getWeekDay() {
+        return this.weekDay;
+    }
+
+    public void setWeekDay(String weekDay) {
+        this.weekDay = weekDay;
+    }
+
+    public String getMonth() {
+        return this.month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public int getDay() {
+        return this.day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public int getYear() {
+        return this.year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 }

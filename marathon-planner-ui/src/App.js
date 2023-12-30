@@ -28,8 +28,6 @@ function App() {
     e.preventDefault();
 
     let response = await axios.post("/pdf");
-
-    console.log("pdf: " + response);
   }
 
   return (
