@@ -1,14 +1,16 @@
 import Header from "./components/Header.js";
 import RunnerForm from "./components/RunnerForm.js";
 import TrainingPlan from "./components/TrainingPlan.js";
-import axios from "axios";
 import { useState } from "react";
+import axios from "axios";
 
 function App() {
   const [skillLevel, setSkillLevel] = useState(1.0);
   const [weeklyIncrease, setWeeklyIncrease] = useState(10);
   const [useMiles, setUseMiles] = useState(false);
   const [trainingPlan, setTrainingPlan] = useState([]);
+
+  const [isTrainingPlanMetric, setIsTrainingPlanMetric] = useState(true); // only used after a training plan is created
 
   const generateTrainingSchedule = async (e) => {
     e.preventDefault();
@@ -22,6 +24,9 @@ function App() {
     let response = await axios.post("/trainingSchedule", requestBody);
 
     setTrainingPlan(response.data);
+
+    // used to display generated training plan in the right system
+    setIsTrainingPlanMetric(!useMiles);
   }
 
   const getTrainingSchedulePDF = async (e) => {
@@ -31,13 +36,13 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App m-2">
       <Header />
       <RunnerForm onClick={generateTrainingSchedule} skillLevel={skillLevel} setSkillLevel={(e) => setSkillLevel(e.target.value)}
         weeklyIncrease={weeklyIncrease} setWeeklyIncrease={(e) => setWeeklyIncrease(e.target.value)} useMiles={useMiles}
         setUseMiles={(e) => setUseMiles(e.target.checked)} />
       <hr></hr>
-      <TrainingPlan trainingPlan={trainingPlan} pdfOnClick={getTrainingSchedulePDF} isMetric={!useMiles} />
+      <TrainingPlan trainingPlan={trainingPlan} pdfOnClick={getTrainingSchedulePDF} isMetric={isTrainingPlanMetric} />
     </div>
   );
 }

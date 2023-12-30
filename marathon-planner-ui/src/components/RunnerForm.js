@@ -33,8 +33,8 @@ const RunnerForm = ({ onClick, skillLevel, setSkillLevel, weeklyIncrease, setWee
                 <br></br>
 
                 <div>
-                    <div>Skill Level: {skillLevel}/10 ({getRunnerSkill()})</div>
-                    <div>Increase Distance by {weeklyIncrease}% each week.</div>
+                    <div><strong>Skill Level:</strong> {skillLevel}/10 ({getRunnerSkill()})</div>
+                    <div><strong>Distance Increase Each Week:</strong> {weeklyIncrease}%</div>
                     {isWeeklyIncreaseHigh() && <div>Increasing distance by over 10% a week is is unsafe. Be careful!</div>}
                 </div>
 
