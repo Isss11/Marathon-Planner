@@ -11,7 +11,7 @@ const DaySchedule = ({ date, weekDay, month, day, year, distance, isMetric }) =>
 
     return (
         <div>
-            <h3>{weekDay}, {month} {day}, {year} | {date}</h3>
+            <h4>{weekDay}, {month} {day}, {year} | {date}</h4>
             <p>{getDistanceString()}</p>
         </div>
     )

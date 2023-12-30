@@ -36,6 +36,7 @@ function App() {
       <RunnerForm onClick={generateTrainingSchedule} skillLevel={skillLevel} setSkillLevel={(e) => setSkillLevel(e.target.value)}
         weeklyIncrease={weeklyIncrease} setWeeklyIncrease={(e) => setWeeklyIncrease(e.target.value)} useMiles={useMiles}
         setUseMiles={(e) => setUseMiles(e.target.checked)} />
+      <hr></hr>
       <TrainingPlan trainingPlan={trainingPlan} pdfOnClick={getTrainingSchedulePDF} isMetric={!useMiles} />
     </div>
   );

@@ -72,6 +72,20 @@ public class TrainingScheduleService {
         dayThisWeek = 0;
         trainingSchedule = new ArrayList<DayPlan>();
 
+        // // Add day plans for all days already passed in current week for easier
+        // calendar
+        // // implementation in UI.
+        // int daysPreceding = getDate(0).getDay();
+        // int i = daysPreceding * -1;
+
+        // while (i < 0) {
+        // daySchedule = getDaySchedule(i);
+        // daySchedule.setDistance(0);
+        // trainingSchedule.add(daySchedule);
+
+        // ++i;
+        // }
+
         // continue training as long as the long run is shorter then a marathon distance
         while (getIsMetric() && curLong < MARATHON_DISTANCE
                 || !getIsMetric() && curLong < MARATHON_DISTANCE / MILE_TO_KM) {
@@ -97,6 +111,22 @@ public class TrainingScheduleService {
 
     public DayPlan getDayPlan(int day, int dayThisWeek, double curShort, double curMedium, double curLong) {
         DayPlan daySchedule;
+
+        daySchedule = getDaySchedule(day);
+
+        if (dayThisWeek <= 2) {
+            daySchedule.setDistance(curShort);
+        } else if (dayThisWeek == 4) {
+            daySchedule.setDistance(curMedium);
+        } else if (dayThisWeek == 6) {
+            daySchedule.setDistance(curLong);
+        }
+
+        return daySchedule;
+    }
+
+    private DayPlan getDaySchedule(int day) {
+        DayPlan daySchedule;
         Calendar calendarDate;
         SimpleDateFormat dateFormatter;
 
@@ -108,14 +138,6 @@ public class TrainingScheduleService {
         daySchedule = new DayPlan(getDateString(calendarDate), dateFormatter.format(calendarDate.getTime()),
                 MONTH_STRINGS[calendarDate.get(Calendar.MONTH)],
                 calendarDate.get(Calendar.DAY_OF_MONTH), calendarDate.get(Calendar.YEAR));
-
-        if (dayThisWeek <= 2) {
-            daySchedule.setDistance(curShort);
-        } else if (dayThisWeek == 4) {
-            daySchedule.setDistance(curMedium);
-        } else if (dayThisWeek == 6) {
-            daySchedule.setDistance(curLong);
-        }
 
         return daySchedule;
     }
