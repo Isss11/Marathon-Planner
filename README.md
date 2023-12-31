@@ -39,5 +39,5 @@ This is a full-stack marathon training plan creator that takes in information ab
 ### *A Training Plan is Dynamically Generated in the Back End, and Listed in the UI*
 ![Generated Marathon Training Plan Schedule](images/trainingPlanSchedule.png)
 
-### *A Graph of the Entire Training Plan is also Shown (using Chart.js)*
+### *A Graph of the Entire Training Plan (using Chart.js)*
 ![Line Chart of Training Plan](images/trainingPlanGraph.png)
