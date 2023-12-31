@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.itextpdf.text.DocumentException;
-
 import java.util.List;
 import java.io.IOException;
 
@@ -22,10 +20,5 @@ public class TrainingPlanController {
     public List<DayPlan> trainingSchedule(@RequestBody Runner runnerData) {
         return trainingScheduleService.createTrainingSchedule(runnerData.getWeeklyIncrease(), runnerData.getIsMetric(),
                 runnerData.getSkillLevel());
-    }
-
-    @RequestMapping(value = "/pdf", method = RequestMethod.POST)
-    public ResponseEntity<byte[]> exportPdf() throws IOException, DocumentException {
-        return trainingScheduleService.getTrainingPlanPdf();
     }
 }

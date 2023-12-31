@@ -27,11 +27,8 @@ This is a full-stack marathon training plan creator that takes in information ab
 
 ## Credits
 
-### PDF Feature (in code, but not fully implemented)
-- https://blog.logrocket.com/using-chart-js-react/
-
 ### Chart.js Functionality
-- https://medium.com/@rijuldahiya/creating-a-pdf-export-api-with-itext-pdf-in-java-spring-boot-a0bdf5f8f57
+- https://blog.logrocket.com/using-chart-js-react/
 
 ## Images
 

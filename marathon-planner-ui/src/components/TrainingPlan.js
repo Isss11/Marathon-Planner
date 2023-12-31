@@ -3,14 +3,13 @@ import TrainingPlanSummary from "./TrainingPlanSummary.js";
 
 
 
-const TrainingPlan = ({ trainingPlan, pdfOnClick, isMetric }) => {
+const TrainingPlan = ({ trainingPlan, isMetric }) => {
     return (
         <div>
             <h2><strong><em>Your</em> Training Plan</strong></h2>
             {trainingPlan.length > 0 ? (
                 <div>
                     <TrainingPlanSummary trainingPlan={trainingPlan} />
-                    {/* <button className="btn btn-danger" onClick={pdfOnClick}>Save as a PDF</button> */}
                     <hr></hr>
                     <h3>Schedule</h3>
                     <Schedule trainingPlan={trainingPlan} isMetric={isMetric}></Schedule>

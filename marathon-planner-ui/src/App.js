@@ -29,12 +29,6 @@ function App() {
     setIsTrainingPlanMetric(!useMiles);
   }
 
-  const getTrainingSchedulePDF = async (e) => {
-    e.preventDefault();
-
-    let response = await axios.post("/pdf");
-  }
-
   return (
     <div className="App m-2">
       <Header />
@@ -42,7 +36,7 @@ function App() {
         weeklyIncrease={weeklyIncrease} setWeeklyIncrease={(e) => setWeeklyIncrease(e.target.value)} useMiles={useMiles}
         setUseMiles={(e) => setUseMiles(e.target.checked)} />
       <hr></hr>
-      <TrainingPlan trainingPlan={trainingPlan} pdfOnClick={getTrainingSchedulePDF} isMetric={isTrainingPlanMetric} />
+      <TrainingPlan trainingPlan={trainingPlan} isMetric={isTrainingPlanMetric} />
     </div>
   );
 }

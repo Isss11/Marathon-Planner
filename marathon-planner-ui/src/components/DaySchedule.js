@@ -1,4 +1,4 @@
-const DaySchedule = ({ weekDay, month, day, year, distance, isMetric, runTitle }) => {
+const DaySchedule = ({ day, distance, isMetric, runTitle }) => {
     const REST_DAY_TOLERANCE = 0.00001;
 
     const isRestDay = () => {
@@ -11,7 +11,7 @@ const DaySchedule = ({ weekDay, month, day, year, distance, isMetric, runTitle }
 
     return (
         <div>
-            <h5><strong>{weekDay}, {month} {day}, {year}</strong> | {runTitle}</h5>
+            <h5><strong>Day #{day}</strong> | {runTitle}</h5>
             <p>{getDistanceString()}</p>
         </div>
     )
