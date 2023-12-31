@@ -10,29 +10,27 @@ public class TrainingScheduleService {
     private List<DayPlan> trainingSchedule;
     private double weeklyIncrease;
     private boolean isMetric;
-    private double skillMultiplier;
+    private double startingWeeklyDistance;
     private static final int WEEK_DAYS = 7;
+    private static final double MINIMUM_WEEKLY_DISTANCE = 5;
     private static final double MARATHON_DISTANCE = 42.2;
     private static final double MILE_TO_KM = 1.6093;
 
-    private static final String[] MONTH_STRINGS = { "January", "February", "March", "April", "May", "June", "July",
-            "August",
-            "September", "October", "November", "December" };
-
-    public List<DayPlan> createTrainingSchedule(double weeklyIncrease, boolean isMetric, int skillLevel) {
+    public List<DayPlan> createTrainingSchedule(double weeklyIncrease, boolean isMetric,
+            double startingWeeklyDistance) {
         setWeeklyIncrease(weeklyIncrease);
-
         setIsMetric(isMetric);
-        setSkillMultiplier(skillLevel);
+        setStartingWeeklyDistance(startingWeeklyDistance);
         setTrainingSchedule();
 
         return getTrainingSchedule();
     }
 
     public void setTrainingSchedule() {
-        double initialShort = 0.5 * getSkillMultiplier();
-        double initialMedium = 1 * getSkillMultiplier();
-        double initialLong = 2 * getSkillMultiplier();
+        // total allocation of running (see decimals below) adds up to 100%
+        double initialShort = 0.3 * getStartingWeeklyDistance() / 3; // splitting distance across 5 days
+        double initialMedium = 0.25 * getStartingWeeklyDistance();
+        double initialLong = 0.45 * getStartingWeeklyDistance();
 
         if (!getIsMetric()) {
             initialShort /= MILE_TO_KM;
@@ -121,11 +119,12 @@ public class TrainingScheduleService {
         return this.isMetric;
     }
 
-    private void setSkillMultiplier(double skillLevel) {
-        this.skillMultiplier = 1.5 * skillLevel;
+    private void setStartingWeeklyDistance(double startingWeeklyDistance) {
+        this.startingWeeklyDistance = startingWeeklyDistance > MINIMUM_WEEKLY_DISTANCE ? startingWeeklyDistance
+                : MINIMUM_WEEKLY_DISTANCE;
     }
 
-    public double getSkillMultiplier() {
-        return this.skillMultiplier;
+    public double getStartingWeeklyDistance() {
+        return this.startingWeeklyDistance;
     }
 }

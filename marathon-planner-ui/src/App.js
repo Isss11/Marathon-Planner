@@ -5,7 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 
 function App() {
-  const [skillLevel, setSkillLevel] = useState(1.0);
+  const [startingWeeklyDistance, setStartingWeeklyDistance] = useState(1.0);
   const [weeklyIncrease, setWeeklyIncrease] = useState(10);
   const [useMiles, setUseMiles] = useState(false);
   const [trainingPlan, setTrainingPlan] = useState([]);
@@ -16,7 +16,7 @@ function App() {
     e.preventDefault();
 
     let requestBody = {
-      "skillLevel": skillLevel,
+      "startingWeeklyDistance": startingWeeklyDistance,
       "weeklyIncrease": weeklyIncrease * 0.01,
       "isMetric": !useMiles
     }
@@ -32,7 +32,7 @@ function App() {
   return (
     <div className="App m-2">
       <Header />
-      <RunnerForm onClick={generateTrainingSchedule} skillLevel={skillLevel} setSkillLevel={(e) => setSkillLevel(e.target.value)}
+      <RunnerForm onClick={generateTrainingSchedule} startingWeeklyDistance={startingWeeklyDistance} setStartingWeeklyDistance={(e) => setStartingWeeklyDistance(e.target.value)}
         weeklyIncrease={weeklyIncrease} setWeeklyIncrease={(e) => setWeeklyIncrease(e.target.value)} useMiles={useMiles}
         setUseMiles={(e) => setUseMiles(e.target.checked)} />
       <hr></hr>

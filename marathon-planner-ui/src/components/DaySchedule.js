@@ -6,7 +6,7 @@ const DaySchedule = ({ day, distance, isMetric, runTitle }) => {
     }
 
     const getDistanceString = () => {
-        return isRestDay() ? "Rest Day." : "Run " + Number.parseFloat(distance).toFixed(1) + (isMetric ? " kilometers" : " miles") + ".";
+        return isRestDay() ? "Rest Day." : "Run " + Number.parseFloat(distance).toFixed(1) + (isMetric ? " KMs" : " Miles") + ".";
     }
 
     return (
