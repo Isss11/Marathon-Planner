@@ -1,5 +1,17 @@
-# Marathon-Planner
-A project (in progress) that will take user information and produce a marathon training plan.
+# Marathon Planner
+
+This is a full-stack marathon training plan creator that takes in information about the user and dynamically generates a marathon training plan customized to the skill level of the runner. It lists out the training plan as a schedule and visualizes it with a graph.
+
+## Technologies Used
+
+- Spring Boot
+- React (Create React App)
+- Java
+- JavaScript
+- HTML
+- Bootstrap 5
+- Chart.js
+- Axios
 
 ## To Run
 
@@ -12,3 +24,23 @@ A project (in progress) that will take user information and produce a marathon t
 2. Start up front-end:
 
 >> `npm start`
+
+## Credits
+
+### PDF Feature (in code, but not fully implemented)
+- https://blog.logrocket.com/using-chart-js-react/
+
+### Chart.js Functionality
+- https://medium.com/@rijuldahiya/creating-a-pdf-export-api-with-itext-pdf-in-java-spring-boot-a0bdf5f8f57
+
+## Images
+
+### *Runner fills their information, and then clicks on 'Generate Training Plan'*
+
+![Runner Training Plan Form](images/runnerForm.png)
+
+### *A Training Plan is Dynamically Generated in the Back End, and Listed in the UI*
+![Generated Marathon Training Plan Schedule](images/trainingPlanSchedule.png)
+
+### *A Graph of the Entire Training Plan is also Shown (using Chart.js)*
+![Line Chart of Training Plan](images/trainingPlanGraph.png)
