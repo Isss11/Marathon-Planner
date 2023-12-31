@@ -1,60 +1,36 @@
 package com.application.marathonplanner.web;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.itextpdf.text.DocumentException;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-import java.io.IOException;
-import java.util.Date;
-import java.io.ByteArrayOutputStream;
 
 @Service
 public class TrainingScheduleService {
     private List<DayPlan> trainingSchedule;
     private double weeklyIncrease;
     private boolean isMetric;
-    private double skillMultiplier;
+    private double startingWeeklyDistance;
     private static final int WEEK_DAYS = 7;
+    private static final double MINIMUM_WEEKLY_DISTANCE = 5;
     private static final double MARATHON_DISTANCE = 42.2;
     private static final double MILE_TO_KM = 1.6093;
 
-    private static final String[] MONTH_STRINGS = { "January", "February", "March", "April", "May", "June", "July",
-            "August",
-            "September", "October", "November", "December" };
-
-    public List<DayPlan> createTrainingSchedule(double weeklyIncrease, boolean isMetric, int skillLevel) {
+    public List<DayPlan> createTrainingSchedule(double weeklyIncrease, boolean isMetric,
+            double startingWeeklyDistance) {
         setWeeklyIncrease(weeklyIncrease);
-
         setIsMetric(isMetric);
-        setSkillMultiplier(skillLevel);
+        setStartingWeeklyDistance(startingWeeklyDistance);
         setTrainingSchedule();
 
         return getTrainingSchedule();
     }
 
-    public ResponseEntity<byte[]> getTrainingPlanPdf() throws IOException, DocumentException {
-        ByteArrayOutputStream pdfStream = PdfUtils.generatePdfStream(getTrainingSchedule());
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=query_results.pdf");
-        headers.setContentLength(pdfStream.size());
-        return new ResponseEntity<>(pdfStream.toByteArray(), headers, HttpStatus.OK);
-    }
-
     public void setTrainingSchedule() {
-        double initialShort = 0.5 * getSkillMultiplier();
-        double initialMedium = 1 * getSkillMultiplier();
-        double initialLong = 2 * getSkillMultiplier();
+        // total allocation of running (see decimals below) adds up to 100%
+        double initialShort = 0.3 * getStartingWeeklyDistance() / 3; // splitting distance across 5 days
+        double initialMedium = 0.25 * getStartingWeeklyDistance();
+        double initialLong = 0.45 * getStartingWeeklyDistance();
 
         if (!getIsMetric()) {
             initialShort /= MILE_TO_KM;
@@ -71,20 +47,6 @@ public class TrainingScheduleService {
         day = 0;
         dayThisWeek = 0;
         trainingSchedule = new ArrayList<DayPlan>();
-
-        // // Add day plans for all days already passed in current week for easier
-        // calendar
-        // // implementation in UI.
-        // int daysPreceding = getDate(0).getDay();
-        // int i = daysPreceding * -1;
-
-        // while (i < 0) {
-        // daySchedule = getDaySchedule(i);
-        // daySchedule.setDistance(0);
-        // trainingSchedule.add(daySchedule);
-
-        // ++i;
-        // }
 
         // continue training as long as the long run is shorter then a marathon distance
         while (getIsMetric() && curLong < MARATHON_DISTANCE
@@ -135,32 +97,10 @@ public class TrainingScheduleService {
 
     private DayPlan getDaySchedule(int day, double distance, String runTitle) {
         DayPlan daySchedule;
-        Calendar calendarDate;
-        SimpleDateFormat dateFormatter;
 
-        calendarDate = Calendar.getInstance();
-        calendarDate.setTime(getDate(day));
-
-        dateFormatter = new SimpleDateFormat("EEEE");
-
-        daySchedule = new DayPlan(getDateString(calendarDate), dateFormatter.format(calendarDate.getTime()),
-                MONTH_STRINGS[calendarDate.get(Calendar.MONTH)],
-                calendarDate.get(Calendar.DAY_OF_MONTH), calendarDate.get(Calendar.YEAR), distance, runTitle);
+        daySchedule = new DayPlan(day + 1, distance, runTitle);
 
         return daySchedule;
-    }
-
-    private Date getDate(int daysAfterToday) {
-        Calendar calendarDate = Calendar.getInstance();
-        calendarDate.add(Calendar.DATE, daysAfterToday);
-
-        return calendarDate.getTime();
-    }
-
-    private String getDateString(Calendar date) {
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-
-        return dateFormatter.format(date.getTime());
     }
 
     private void setWeeklyIncrease(double weeklyIncrease) {
@@ -179,11 +119,12 @@ public class TrainingScheduleService {
         return this.isMetric;
     }
 
-    private void setSkillMultiplier(double skillLevel) {
-        this.skillMultiplier = 1.5 * skillLevel;
+    private void setStartingWeeklyDistance(double startingWeeklyDistance) {
+        this.startingWeeklyDistance = startingWeeklyDistance > MINIMUM_WEEKLY_DISTANCE ? startingWeeklyDistance
+                : MINIMUM_WEEKLY_DISTANCE;
     }
 
-    public double getSkillMultiplier() {
-        return this.skillMultiplier;
+    public double getStartingWeeklyDistance() {
+        return this.startingWeeklyDistance;
     }
 }

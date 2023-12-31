@@ -17,7 +17,7 @@ function LineChart({ chartData }) {
                         x: {
                             title: {
                                 display: true,
-                                text: "Date",
+                                text: "Day",
                                 color: "black",
                             },
                         },

@@ -7,7 +7,7 @@ Chart.register(CategoryScale);
 const TrainingPlanSummary = ({ trainingPlan }) => {
     const getChartData = () => {
         return {
-            labels: trainingPlan.map((data) => data.date),
+            labels: trainingPlan.map((data) => data.day),
             datasets: [
                 {
                     data: trainingPlan.map((data) => data.distance),

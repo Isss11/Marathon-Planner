@@ -27,11 +27,8 @@ This is a full-stack marathon training plan creator that takes in information ab
 
 ## Credits
 
-### PDF Feature (in code, but not fully implemented)
-- https://blog.logrocket.com/using-chart-js-react/
-
 ### Chart.js Functionality
-- https://medium.com/@rijuldahiya/creating-a-pdf-export-api-with-itext-pdf-in-java-spring-boot-a0bdf5f8f57
+- https://blog.logrocket.com/using-chart-js-react/
 
 ## Images
 
@@ -42,5 +39,5 @@ This is a full-stack marathon training plan creator that takes in information ab
 ### *A Training Plan is Dynamically Generated in the Back End, and Listed in the UI*
 ![Generated Marathon Training Plan Schedule](images/trainingPlanSchedule.png)
 
-### *A Graph of the Entire Training Plan is also Shown (using Chart.js)*
+### *A Graph of the Entire Training Plan (using Chart.js)*
 ![Line Chart of Training Plan](images/trainingPlanGraph.png)

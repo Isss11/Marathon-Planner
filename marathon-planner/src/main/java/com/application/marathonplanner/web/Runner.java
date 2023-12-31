@@ -3,7 +3,7 @@ package com.application.marathonplanner.web;
 public class Runner {
     private double weeklyIncrease;
     private boolean isMetric;
-    private int skillLevel;
+    private double startingWeeklyDistance;
 
     public double getWeeklyIncrease() {
         return this.weeklyIncrease;
@@ -13,7 +13,7 @@ public class Runner {
         return this.isMetric;
     }
 
-    public int getSkillLevel() {
-        return this.skillLevel;
+    public double getStartingWeeklyDistance() {
+        return this.startingWeeklyDistance;
     }
 }

@@ -1,4 +1,4 @@
-const DaySchedule = ({ weekDay, month, day, year, distance, isMetric, runTitle }) => {
+const DaySchedule = ({ day, distance, isMetric, runTitle }) => {
     const REST_DAY_TOLERANCE = 0.00001;
 
     const isRestDay = () => {
@@ -6,12 +6,12 @@ const DaySchedule = ({ weekDay, month, day, year, distance, isMetric, runTitle }
     }
 
     const getDistanceString = () => {
-        return isRestDay() ? "Rest Day." : "Run " + Number.parseFloat(distance).toFixed(1) + (isMetric ? " kilometers" : " miles") + ".";
+        return isRestDay() ? "Rest Day." : "Run " + Number.parseFloat(distance).toFixed(1) + (isMetric ? " KMs" : " Miles") + ".";
     }
 
     return (
         <div>
-            <h5><strong>{weekDay}, {month} {day}, {year}</strong> | {runTitle}</h5>
+            <h5><strong>Day #{day}</strong> | {runTitle}</h5>
             <p>{getDistanceString()}</p>
         </div>
     )
