@@ -14,7 +14,6 @@ const TrainingPlan = ({ trainingPlan, isMetric }) => {
                     <h3>Schedule</h3>
                     <Schedule trainingPlan={trainingPlan} isMetric={isMetric}></Schedule>
                     <hr></hr>
-                    <p>After all of this training, you will be ready to run your marathon!</p>
                 </div>
             ) : (
                 <div>
