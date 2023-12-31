@@ -4,6 +4,7 @@ public class DayPlan {
     private int day;
     private double distance;
     private String runTitle;
+    private static double ROUNDING_DISTANCE_MINIMUM = 5;
 
     public DayPlan(int day) {
         setDay(day);
@@ -26,7 +27,7 @@ public class DayPlan {
     }
 
     public void setDistance(double distance) {
-        this.distance = distance;
+        this.distance = distance > ROUNDING_DISTANCE_MINIMUM ? Math.round(distance) : distance;
     }
 
     public double getDistance() {

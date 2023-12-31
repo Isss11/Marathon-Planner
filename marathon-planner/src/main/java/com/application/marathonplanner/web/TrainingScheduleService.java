@@ -80,9 +80,6 @@ public class TrainingScheduleService {
                 daySchedules = new ArrayList<DayPlan>();
                 weeklyDistance = 0;
 
-                // TODO: Add in remaining days if we need did reach a multiple of 7 on the final
-                // day
-
                 ++week;
             }
         }
