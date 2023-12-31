@@ -32,12 +32,12 @@ This is a full-stack marathon training plan creator that takes in information ab
 
 ## Images
 
-### *Runner fills their information, and then clicks on 'Generate Training Plan'*
+### *Runner fills in their information, and then clicks on 'Generate Training Plan'*
 
 ![Runner Training Plan Form](images/runnerForm.png)
 
-### *A Training Plan is Dynamically Generated in the Back End, and Listed in the UI*
+### *A Training Plan is Dynamically Generated in the Back End, and Listed in the UI as Table*
 ![Generated Marathon Training Plan Schedule](images/trainingPlanSchedule.png)
 
-### *A Graph of the Entire Training Plan (using Chart.js)*
+### *A Graph is Shown of the Entire Training Plan*
 ![Line Chart of Training Plan](images/trainingPlanGraph.png)

@@ -17,14 +17,14 @@ function LineChart({ chartData }) {
                         x: {
                             title: {
                                 display: true,
-                                text: "Day",
+                                text: "Week",
                                 color: "black",
                             },
                         },
                         y: {
                             title: {
                                 display: true,
-                                text: "Distance",
+                                text: "Weekly Distance",
                                 color: "black",
                             },
                         }

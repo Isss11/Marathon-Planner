@@ -7,7 +7,7 @@ Chart.register(CategoryScale);
 const TrainingPlanSummary = ({ trainingPlan }) => {
     const getChartData = () => {
         return {
-            labels: trainingPlan.map((data) => data.day),
+            labels: trainingPlan.map((data) => data.week),
             datasets: [
                 {
                     data: trainingPlan.map((data) => data.distance),
@@ -22,7 +22,6 @@ const TrainingPlanSummary = ({ trainingPlan }) => {
         <div>
             <h3>Training Plan Summary</h3>
             <LineChart chartData={getChartData()} />
-            <p><strong>Duration: </strong> {trainingPlan.length} days</p>
         </div>
     )
 }

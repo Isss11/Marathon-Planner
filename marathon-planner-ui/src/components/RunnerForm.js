@@ -3,13 +3,20 @@ const RunnerForm = ({ onClick, startingWeeklyDistance, setStartingWeeklyDistance
         return weeklyIncrease > 10;
     }
 
+    const KM_TO_MILE = 0.6214;
+    const MAX_WEEKLY_STARTING_DISTANCE_KMS = 80;
+
+    const getMaxStartingDistance = () => {
+        return Math.floor(useMiles ? MAX_WEEKLY_STARTING_DISTANCE_KMS * KM_TO_MILE : MAX_WEEKLY_STARTING_DISTANCE_KMS);
+    }
+
     return (
         <div>
             <h2>Runner Information</h2>
             <form>
                 <label htmlFor="startingWeeklyDistance">Weekly Distance Run</label>
                 <br></br>
-                <input className="form-range" type="range" min="0" max="250" step="1" value={startingWeeklyDistance} onChange={setStartingWeeklyDistance} id="startingWeeklyDistance" />
+                <input className="form-range" type="range" min="0" max={getMaxStartingDistance()} step="1" value={startingWeeklyDistance} onChange={setStartingWeeklyDistance} id="startingWeeklyDistance" />
                 <br></br>
                 <label htmlFor="weeklyIncrease">Weekly Increase<br></br></label>
                 <br></br>
