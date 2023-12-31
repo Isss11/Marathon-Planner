@@ -1,13 +1,11 @@
 package com.application.marathonplanner.web;
 
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.ArrayList;
 
 @Service
 public class TrainingScheduleService {
-    private List<DayPlan> trainingSchedule;
+    private ArrayList<WeekPlan> trainingSchedule;
     private double weeklyIncrease;
     private boolean isMetric;
     private double startingWeeklyDistance;
@@ -16,7 +14,7 @@ public class TrainingScheduleService {
     private static final double MARATHON_DISTANCE = 42.2;
     private static final double MILE_TO_KM = 1.6093;
 
-    public List<DayPlan> createTrainingSchedule(double weeklyIncrease, boolean isMetric,
+    public ArrayList<WeekPlan> createTrainingSchedule(double weeklyIncrease, boolean isMetric,
             double startingWeeklyDistance) {
         setWeeklyIncrease(weeklyIncrease);
         setIsMetric(isMetric);
@@ -38,21 +36,31 @@ public class TrainingScheduleService {
             initialLong /= MILE_TO_KM;
         }
 
-        double curShort = initialShort;
-        double curMedium = initialMedium;
-        double curLong = initialLong;
-        int day, dayThisWeek;
+        double weeklyDistance, curShort, curMedium, curLong;
+        int day, dayThisWeek, week;
         DayPlan daySchedule;
+        WeekPlan weekSchedule;
+        ArrayList<DayPlan> daySchedules;
+
+        curShort = initialShort;
+        curMedium = initialMedium;
+        curLong = initialLong;
 
         day = 0;
         dayThisWeek = 0;
-        trainingSchedule = new ArrayList<DayPlan>();
+        week = 0;
+        weeklyDistance = 0;
+
+        trainingSchedule = new ArrayList<WeekPlan>();
+        daySchedules = new ArrayList<DayPlan>();
 
         // continue training as long as the long run is shorter then a marathon distance
         while (getIsMetric() && curLong < MARATHON_DISTANCE
                 || !getIsMetric() && curLong < MARATHON_DISTANCE / MILE_TO_KM) {
             daySchedule = getDayPlan(day, dayThisWeek, curShort, curMedium, curLong);
-            trainingSchedule.add(daySchedule);
+            daySchedules.add(daySchedule);
+
+            weeklyDistance += daySchedule.getDistance();
 
             ++day;
             ++dayThisWeek;
@@ -63,11 +71,24 @@ public class TrainingScheduleService {
                 curShort += getWeeklyIncrease() * curShort;
                 curMedium += getWeeklyIncrease() * curMedium;
                 curLong += getWeeklyIncrease() * curLong;
+
+                // add in week schedule to the training schedule
+                weekSchedule = new WeekPlan(daySchedules, week + 1, weeklyDistance);
+                trainingSchedule.add(weekSchedule);
+
+                // reset daySchedules for next week
+                daySchedules = new ArrayList<DayPlan>();
+                weeklyDistance = 0;
+
+                // TODO: Add in remaining days if we need did reach a multiple of 7 on the final
+                // day
+
+                ++week;
             }
         }
     }
 
-    public List<DayPlan> getTrainingSchedule() {
+    public ArrayList<WeekPlan> getTrainingSchedule() {
         return trainingSchedule;
     }
 

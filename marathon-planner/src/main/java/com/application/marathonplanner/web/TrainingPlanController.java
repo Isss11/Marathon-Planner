@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @RestController
 public class TrainingPlanController {
@@ -15,7 +15,7 @@ public class TrainingPlanController {
     private TrainingScheduleService trainingScheduleService;
 
     @RequestMapping(value = "/trainingSchedule", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    public List<DayPlan> trainingSchedule(@RequestBody Runner runnerData) {
+    public ArrayList<WeekPlan> trainingSchedule(@RequestBody Runner runnerData) {
         return trainingScheduleService.createTrainingSchedule(runnerData.getWeeklyIncrease(), runnerData.getIsMetric(),
                 runnerData.getStartingWeeklyDistance());
     }

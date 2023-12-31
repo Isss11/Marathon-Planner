@@ -5,6 +5,12 @@ public class DayPlan {
     private double distance;
     private String runTitle;
 
+    public DayPlan(int day) {
+        setDay(day);
+        setDistance(0);
+        setRunTitle(null);
+    }
+
     public DayPlan(int day, double distance, String runTitle) {
         setDay(day);
         setDistance(distance);
