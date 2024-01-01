@@ -1,4 +1,4 @@
-# Marathon Planner
+# Dynamic Running Plan Generator
 
 This is a full-stack running training plan generator. It takes information about the user's goal and running capability and dynamically generates a training plan customized to the skill level of the runner. It lists out the training plan as a schedule and visualizes it with a graph.
 
