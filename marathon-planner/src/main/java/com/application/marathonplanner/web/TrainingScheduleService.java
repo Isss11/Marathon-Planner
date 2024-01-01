@@ -9,16 +9,18 @@ public class TrainingScheduleService {
     private double weeklyIncrease;
     private boolean isMetric;
     private double startingWeeklyDistance;
+    private double goalDistance;
+
     private static final int WEEK_DAYS = 7;
     private static final double MINIMUM_WEEKLY_DISTANCE = 5;
-    private static final double MARATHON_DISTANCE = 42.2;
     private static final double MILE_TO_KM = 1.6093;
 
     public ArrayList<WeekPlan> createTrainingSchedule(double weeklyIncrease, boolean isMetric,
-            double startingWeeklyDistance) {
+            double startingWeeklyDistance, double goalDistance) {
         setWeeklyIncrease(weeklyIncrease);
         setIsMetric(isMetric);
         setStartingWeeklyDistance(startingWeeklyDistance);
+        setGoalDistance(goalDistance);
         setTrainingSchedule();
 
         return getTrainingSchedule();
@@ -55,8 +57,8 @@ public class TrainingScheduleService {
         daySchedules = new ArrayList<DayPlan>();
 
         // continue training as long as the long run is shorter then a marathon distance
-        while (getIsMetric() && curLong < MARATHON_DISTANCE
-                || !getIsMetric() && curLong < MARATHON_DISTANCE / MILE_TO_KM) {
+        while (getIsMetric() && curLong < getGoalDistance()
+                || !getIsMetric() && curLong < getGoalDistance() / MILE_TO_KM) {
             daySchedule = getDayPlan(day, dayThisWeek, curShort, curMedium, curLong);
             daySchedules.add(daySchedule);
 
@@ -144,5 +146,13 @@ public class TrainingScheduleService {
 
     public double getStartingWeeklyDistance() {
         return this.startingWeeklyDistance;
+    }
+
+    public double getGoalDistance() {
+        return this.goalDistance;
+    }
+
+    public void setGoalDistance(double goalDistance) {
+        this.goalDistance = goalDistance;
     }
 }

@@ -1,8 +1,8 @@
 const Header = () => {
     return (
         <div>
-            <h1><strong>Plan <em>your</em> Marathon!</strong></h1>
-            <p>Enter your information below, and we will dynamically create a marathon training plan customized for you!</p>
+            <h1><strong>Create <em>your</em> Training Plan</strong></h1>
+            <h5>Enter in details about your goal and running capability, we will generate a training plan customized to <em>your</em> needs.</h5>
         </div>
     )
 }

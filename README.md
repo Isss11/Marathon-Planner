@@ -1,6 +1,6 @@
 # Marathon Planner
 
-This is a full-stack marathon training plan creator that takes in information about the user and dynamically generates a marathon training plan customized to the skill level of the runner. It lists out the training plan as a schedule and visualizes it with a graph.
+This is a full-stack running training plan generator. It takes information about the user's goal and running capability and dynamically generates a training plan customized to the skill level of the runner. It lists out the training plan as a schedule and visualizes it with a graph.
 
 ## Technologies Used
 
@@ -12,6 +12,7 @@ This is a full-stack marathon training plan creator that takes in information ab
 - Bootstrap 5
 - Chart.js
 - Axios
+- Maven
 
 ## To Run
 

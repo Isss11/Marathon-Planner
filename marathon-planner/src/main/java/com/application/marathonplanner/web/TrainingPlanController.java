@@ -17,6 +17,6 @@ public class TrainingPlanController {
     @RequestMapping(value = "/trainingSchedule", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     public ArrayList<WeekPlan> trainingSchedule(@RequestBody Runner runnerData) {
         return trainingScheduleService.createTrainingSchedule(runnerData.getWeeklyIncrease(), runnerData.getIsMetric(),
-                runnerData.getStartingWeeklyDistance());
+                runnerData.getStartingWeeklyDistance(), runnerData.getGoalDistance());
     }
 }
