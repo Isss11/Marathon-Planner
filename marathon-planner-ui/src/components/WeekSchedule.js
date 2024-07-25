@@ -1,8 +1,7 @@
 import DaySchedule from "./DaySchedule";
-import { getDistanceString, roundDistance } from "./Utils";
+import { getDistanceString, } from "./Utils";
 
 const WeekSchedule = ({ isMetric, weekScheduleDetails }) => {
-
     return (
         <tr>
             <td>{weekScheduleDetails.week}</td>

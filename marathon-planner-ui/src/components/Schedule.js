@@ -1,9 +1,6 @@
-import DaySchedule from "./DaySchedule";
 import WeekSchedule from "./WeekSchedule";
 
 const Schedule = ({ trainingPlan, isMetric }) => {
-
-
     return (
         <div>
             <table className="table table-hover">

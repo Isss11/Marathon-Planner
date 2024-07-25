@@ -18,27 +18,32 @@ This is a full-stack running training plan generator. It takes information about
 
 1.  Start up back-end:
 
->> `cd marathon-planner`
+> > `cd marathon-planner`
 
->> `mvn spring-boot:run`
+> > `mvn spring-boot:run`
 
 2. Start up front-end:
 
->> `npm start`
+> > `cd marathon-planner-ui`
+
+> > `npm start`
 
 ## Credits
 
 ### Chart.js Functionality
+
 - https://blog.logrocket.com/using-chart-js-react/
 
 ## Images
 
-### *Runner fills in their information, and then clicks on 'Generate Training Plan'*
+### _Runner fills in their information, and then clicks on 'Generate Training Plan'_
 
 ![Runner Training Plan Form](images/runnerForm.png)
 
-### *A Training Plan is Dynamically Generated in the Back End, and Listed in the UI as Table*
+### _A Training Plan is Dynamically Generated in the Back End, and Listed in the UI as Table_
+
 ![Generated Marathon Training Plan Schedule](images/trainingPlanSchedule.png)
 
-### *A Graph is Shown of the Entire Training Plan*
+### _A Graph is Shown of the Entire Training Plan_
+
 ![Line Chart of Training Plan](images/trainingPlanGraph.png)
