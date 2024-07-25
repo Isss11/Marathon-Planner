@@ -1,6 +1,6 @@
 package com.application.marathonplanner.web;
 
-import java.util.ArrayList;;
+import java.util.ArrayList;
 
 public class WeekPlan {
     private ArrayList<DayPlan> daySchedules;
